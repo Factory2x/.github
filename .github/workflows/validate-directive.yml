@@ -1,0 +1,26 @@
+name: Validate Directive
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  validate:
+    if: contains(github.event.issue.labels.*.name, 'directive')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "headquarters-contracts @ git+https://github.com/L6n-labs/headquarters"
+      - name: Validate directive body
+        run: |
+          python -c "
+          import os, json
+          from contracts import validate_artifact
+          body = json.loads(os.environ['ISSUE_BODY'])
+          validate_artifact('directive', body)
+          print('Valid directive.')
+          "
+        env:
+          ISSUE_BODY: ${{ toJSON(github.event.issue.body) }}
