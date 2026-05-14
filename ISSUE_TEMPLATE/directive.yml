@@ -1,0 +1,21 @@
+name: Directive
+description: A coarse-grained outcome — what needs to happen, not how.
+title: ""
+labels: ["directive"]
+body:
+  - type: textarea
+    id: intent
+    attributes:
+      label: Intent
+      description: What needs to happen, in your own words.
+      placeholder: "Get the resume ready for the interview Thursday."
+    validations:
+      required: true
+  - type: textarea
+    id: work-streams
+    attributes:
+      label: Work Streams
+      description: Leave empty — filled during decomposition.
+      placeholder: "Filled by Logan during decomposition."
+    validations:
+      required: false
