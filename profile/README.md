@@ -1,6 +1,6 @@
 # Factory X
 
-A project ecosystem that builds and improves itself. The tooling repo improves the product repo, and building the product exposes what the tooling needs next.
+A project ecosystem that builds and improves itself. The tooling repos improve the product repos, and building the products exposes what the tooling needs next.
 
 Research → Build → Scale → Learn. Same loop since Chemical Engineering, different constraints.
 
