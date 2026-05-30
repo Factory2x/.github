@@ -49,8 +49,13 @@ Org-level governance. Symlinked into the local machine on every checkout.
 
 ---
 
-Collect data around every operation. Tune upstream every time that data reveals issues. Discover and consider the latest tools available like it's the job. Collect scar tissue like it's gold. Compare notes. Iterate.
+> - Collect data around every operation.
+> - Tune upstream every time that data reveals issues.
+> - Discover and consider the latest tools available like it's the job.
+> - Collect scar tissue like it's gold.
+> - Compare notes.
+> - Iterate.
+>
+> Constraints and tooling change. Engineering doesn't.
 
-Constraints and tooling change. Engineering doesn't.
-
-The longer versions: [Engineering](https://loganmies.com/blog/factoryx/engineering/) and [Dinner-Table-Driven Development](https://loganmies.com/blog/oyeme/dinner-table-driven-development/).
+See the longer version: [Engineering](https://loganmies.com/blog/factoryx/engineering/) ·  [Dinner-Table-Driven Development](https://loganmies.com/blog/oyeme/dinner-table-driven-development/)
