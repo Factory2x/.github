@@ -10,7 +10,7 @@ Research → Build → Scale → Learn. Same loop since Chemical Engineering, di
 
 **headquarters** is the nervous system. A research pipeline crawls 30+ AI and infrastructure sources daily, scores and deduplicates findings against active projects, and writes structured intel into a governance layer. Artifact contracts enforce typed schemas on every issue, PR, and audit finding across the org — generators, parsers, validators. A FastMCP server (35 tools) gives agents typed access to all of it. Everything flows through here.
 
-This is also where the patterns I bring back into my day job come from. The research pipeline is the standout: curated source tables, model-tiered processing (Sonnet for collection, Opus for synthesis), observability everywhere, daily briefings. It's how I stay current and how the system stays honest.
+This is also where the patterns I bring back into my day job come from. The research pipeline is the standout: curated source tables, observability everywhere, daily briefings. It's how I stay current and how the system stays honest.
 
 **oyeme** is [something people actually use](https://loganmies.com/blog/oyeme/dinner-table-driven-development/). Real-time interpreter for multilingual families — SvelteKit, Supabase, LiveKit, AssemblyAI, speaker identification. The only traditional product here so far. Building it is what exposes what the tooling needs next.
 
