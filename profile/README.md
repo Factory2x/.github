@@ -8,15 +8,12 @@ The tooling repos improve the product repos, and building the products exposes w
 
 ### headquarters
 
-The nervous system. Everything flows through here — and back into my day job.
+The nervous system. Everything flows through here — and back into my day job. Research pipeline, artifact contracts, MCP servers, governance layer.
 
-- **Research pipeline** — AI tooling moves too fast to track by reading. The pipeline crawls 30+ sources daily, deduplicates against known findings, scores for relevance against active projects, and writes structured briefings on a schedule. The output feeds directly into architecture decisions and audit priorities. I think automated research as a first-class subsystem is going to be table stakes for most development platforms soon.
-
-- **Artifact contracts** — Every artifact between repos (issues, PRs, findings, audits, briefings) conforms to a typed schema. Generators, parsers, validators, round-trip tests. A malformed issue body fails before it's created. This is how five repos stay consistent without a monorepo.
-
-- **MCP** — Repos communicate through Model Context Protocol servers over stdio. `hq-mcp`: 35 tools, 9 Resources. `oyeme-mcp`: operational tools for the product. Typed access to project state — no raw API calls.
-
-- **Governance** — Integration map defines routing, label state machines, cross-repo permissions. `hq_file_issue` reads the routing table, validates the body against the contract, creates the issue with correct labels. Field repos consume governance; they don't define it.
+- **Research pipeline** — Crawls 30+ sources daily, deduplicates, scores against active projects, writes structured briefings. I think automated research as a first-class subsystem is going to be table stakes for most development platforms soon.
+- **Artifact contracts** — Typed schemas for every artifact between repos. Generators, parsers, validators, round-trip tests. Five repos stay consistent without a monorepo.
+- **MCP** — `hq-mcp`: 35 tools, 9 Resources. `oyeme-mcp`: operational tools for the product. Typed access to project state over stdio.
+- **Governance** — Integration map, label state machines, cross-repo routing. Field repos consume governance; they don't define it.
 
 ---
 
