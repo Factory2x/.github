@@ -52,6 +52,8 @@ Integration map, label state machines, cross-repo routing. Field repos consume g
 
 </details>
 
+---
+
 ### [`oyeme/`](https://github.com/factory2x/oyeme)
 
 [Something people actually use.](https://loganmies.com/blog/oyeme/dinner-table-driven-development/) Real-time interpreter for multilingual families.
@@ -82,6 +84,8 @@ SvelteKit 2, Supabase (18 tables, RLS, Auth), LiveKit WebRTC rooms. `oyeme-mcp`:
 
 </details>
 
+---
+
 ### [`blog/`](https://github.com/factory2x/blog)
 
 Part of the refinement loop. Every post forces a review of what was built, and the output feeds back into the system.
@@ -110,6 +114,8 @@ Factory<sup>x</sup> engineering series (build, repeat, research, scale), Óyeme 
 
 </details>
 
+---
+
 ### [`employment/`](https://github.com/factory2x/employment)
 
 Self-reflection and discovery.
@@ -132,6 +138,8 @@ Notion is the source of truth. Five pages in the Site Mirror DB, three role-shap
 Opportunities as GitHub Issues with contract-enforced status machines. EU-focused: Dublin, Amsterdam, London.
 
 </details>
+
+---
 
 ### [`.claude/`](https://github.com/factory2x/.claude)
 
