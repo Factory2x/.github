@@ -27,6 +27,7 @@ Research pipeline, artifact contracts, MCP servers, governance layer.
 
 <details>
 <summary>Technical details</summary>
+<br>
 
 **Research pipeline**
 Crawls 30+ sources daily, deduplicates, scores against active projects, writes structured briefings. I think automated research as a first-class subsystem is going to be table stakes for most development platforms soon.
@@ -105,6 +106,7 @@ The same research pipeline that improves the product also surfaces what's next.
 
 <details>
 <summary>Technical details</summary>
+<br>
 
 **Find**
 Crawls 35 sources daily (Greenhouse ATS, Ashby ATS, EU aggregators, remote boards, HN Who is Hiring). Sonnet-scored against a 45-skill candidate profile with evidence chains and per-variant weights.
@@ -126,6 +128,7 @@ Symlinked into `~/.claude/` on every machine via bootstrap script.
 
 <details>
 <summary>Technical details</summary>
+<br>
 
 **Skills**
 10+ reusable slash commands: spec writing and review, epic decomposition and execution, voice analysis (14-profile corpus), org-wide triage, blog drafting into Notion.
