@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html data-theme="dark">
+<head>
+<link rel="stylesheet" href="https://loganmies.com/site.css">
+<link rel="stylesheet" href="katex.min.css">
+<script src="katex.min.js"></script>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    height: 500px;
+    max-width: none;
+  }
+  .logo {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18%;
+    overflow: hidden;
+    background: var(--paper-3);
+    color: var(--ink);
+  }
+  .katex { color: inherit; font-size: 340px; margin-left: 0.15em; margin-top: 0.06em; }
+  .katex .msupsub .vlist-t { margin-left: -0.05em; }
+  .katex .msupsub .vlist-t .vlist-r .vlist span { top: -3.2em !important; }
+  .katex .msupsub .vlist-t .vlist-r .vlist span .mord { font-size: 0.6em; }
+</style>
+</head>
+<body>
+  <div class="logo" id="logo"></div>
+  <script>
+    katex.render("\\textrm{F}^{\\scriptscriptstyle x}", document.getElementById("logo"), {
+      displayMode: false,
+      throwOnError: false
+    });
+  </script>
+</body>
+</html>
