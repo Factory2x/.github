@@ -18,6 +18,10 @@ The tooling repos improve the product repos, and building the products exposes w
 └──────────────┘
 ```
 
+Some writing on the principles here:
+
+[loganmies.com/blog/factoryx/engineering/](https://loganmies.com/blog/factoryx/engineering/)
+
 ---
 
 ### [`headquarters/`](https://github.com/factory2x/headquarters)
@@ -161,14 +165,3 @@ Field repos can shadow with local skills. Promotion path: local override → PR 
 </details>
 
 ---
-
-> - Collect data around every operation.
-> - Tune upstream every time that data reveals issues.
-> - Discover and consider the latest tools available like it's the job.
-> - Collect scar tissue like it's gold.
-> - Compare notes.
-> - Iterate.
->
-> Constraints and tooling change. Engineering doesn't.
-
-See the longer version: [Engineering](https://loganmies.com/blog/factoryx/engineering/) · [Dinner-Table-Driven Development](https://loganmies.com/blog/oyeme/dinner-table-driven-development/)
