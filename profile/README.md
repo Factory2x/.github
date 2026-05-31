@@ -2,11 +2,27 @@
 
 A project ecosystem that builds and improves itself.
 
-The tooling repos improve the product repos, and building the products exposes what the tooling needs next. Research → Build → Scale → Learn. Same loop since Chemical Engineering, different constraints.
+The tooling repos improve the product repos, and building the products exposes what the tooling needs next.
+
+```
+┌──────────────┐
+│   Research   │◀──────────╮
+└──────┬───────┘           │
+       │                 Learn
+┌──────▼───────┐           │
+│    Build     │◀──────────┤
+└──────┬───────┘           │
+       │                 Learn
+┌──────▼───────┐           │
+│    Scale     │───────────╯
+└──────────────┘
+```
+
+Same loop since Chemical Engineering, different constraints.
 
 ---
 
-### headquarters
+### [`headquarters/`](https://github.com/factory2x/headquarters)
 
 The nervous system. Everything flows through here — and back into my day job. Research pipeline, artifact contracts, MCP servers, governance layer.
 
@@ -15,7 +31,9 @@ The nervous system. Everything flows through here — and back into my day job. 
 - **MCP** — `hq-mcp`: 35 tools, 9 Resources. Typed access to project state over stdio.
 - **Governance** — Integration map, label state machines, cross-repo routing. Field repos consume governance; they don't define it.
 
-### oyeme
+---
+
+### [`oyeme/`](https://github.com/factory2x/oyeme)
 
 [Something people actually use.](https://loganmies.com/blog/oyeme/dinner-table-driven-development/) Real-time interpreter for multilingual families. The only traditional product here so far — building it is what exposes what the tooling needs next.
 
@@ -23,7 +41,9 @@ The nervous system. Everything flows through here — and back into my day job. 
 - **Speaker ID** — ECAPA-TDNN embeddings (192-dim) stored in pgvector, cosine similarity matching. Custom inference server on Hetzner.
 - **Stack** — SvelteKit 2, Supabase (18 tables, RLS, Auth), LiveKit WebRTC rooms. `oyeme-mcp`: 24 tools across core, data, and infra.
 
-### blog
+---
+
+### [`blog/`](https://github.com/factory2x/blog)
 
 Part of the refinement loop. Every post forces a review of what was built, and the output feeds back into the system. [loganmies.com](https://loganmies.com).
 
@@ -31,7 +51,9 @@ Part of the refinement loop. Every post forces a review of what was built, and t
 - **Content** — Factory<sup>x</sup> engineering series (build, repeat, research, scale), Óyeme doctrine, airport connection plans, legal hub, pipeline showcase.
 - **Showcase** — `/src/` is an interactive Notion-style source table of every published page. Resizable columns, filterable by status/type/language.
 
-### employment
+---
+
+### [`employment/`](https://github.com/factory2x/employment)
 
 Self-reflection and discovery. The same research pipeline that improves the product also surfaces what's next.
 
@@ -39,7 +61,9 @@ Self-reflection and discovery. The same research pipeline that improves the prod
 - **Resume** — Notion is the source of truth. Five pages in the Site Mirror DB, three role-shape variants (AI Infra, SRE, Product), PDF render from live Notion blocks via weasyprint.
 - **Tracking** — Opportunities as GitHub Issues with contract-enforced status machines. EU-focused: Dublin, Amsterdam, London.
 
-### .claude
+---
+
+### [`.claude/`](https://github.com/factory2x/.claude)
 
 Org-level governance. Symlinked into `~/.claude/` on every machine via bootstrap script.
 
@@ -58,4 +82,4 @@ Org-level governance. Symlinked into `~/.claude/` on every machine via bootstrap
 >
 > Constraints and tooling change. Engineering doesn't.
 
-See the longer version: [Engineering](https://loganmies.com/blog/factoryx/engineering/) ·  [Dinner-Table-Driven Development](https://loganmies.com/blog/oyeme/dinner-table-driven-development/)
+See the longer version: [Engineering](https://loganmies.com/blog/factoryx/engineering/) · [Dinner-Table-Driven Development](https://loganmies.com/blog/oyeme/dinner-table-driven-development/)
