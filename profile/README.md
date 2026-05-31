@@ -18,7 +18,7 @@ The tooling repos improve the product repos, and building the products exposes w
 └──────────────┘
 ```
 
-Some writing on the principles here:
+Some writing on the principles and patterns here:
 
 [loganmies.com/blog/factoryx/engineering/](https://loganmies.com/blog/factoryx/engineering/)
 
@@ -56,31 +56,59 @@ Integration map, label state machines, cross-repo routing. Field repos consume g
 
 ### [`oyeme/`](https://github.com/factory2x/oyeme)
 
-[Something people actually use.](https://loganmies.com/blog/oyeme/dinner-table-driven-development/) Real-time interpreter for multilingual families.
-The only traditional product here so far — building it is what exposes what the tooling needs next.
+[Something people actually use.](https://loganmies.com/blog/oyeme/dinner-table-driven-development/) 
+
+Real-time translation and learning service for multilingual families.
+
+Speaker diarization, family-scoped glossaries, locale-adaptive prompt registers, speculative translation, slow-speed TTS for language acquisition.
 
 <details>
 <summary>More details</summary>
 <br>
 
 ```
-mic → VAD → STT → translate → TTS
-              ↕
-         speaker ID
-        (pgvector)
+┌─────────────────────────────┐
+│             mic             │
+└──────────────┬──────────────┘
+               ▼
+┌─────────────────────────────┐
+│             VAD             │
+│  (voice activity detection) │
+└──────────────┬──────────────┘
+         ┌─────┴─────┐
+         ▼           ▼
+┌─────────────┐ ┌──────────────┐
+│     STT     │ │  speaker ID  │
+│ (speech-to- │ │  (pgvector)  │
+│    text)    │ └──────┬───────┘
+└──────┬──────┘        │
+       │               │
+       ▼               ▼
+┌─────────────────────────────┐
+│          translate          │
+└──────────────┬──────────────┘
+               ▼
+┌─────────────────────────────┐
+│             TTS             │
+│      (text-to-speech)       │
+└─────────────────────────────┘
 ```
 
 **Pipeline**
 
-Provider-abstracted audio: VAD in-browser, STT (AssemblyAI/Deepgram), translation (OpenAI), TTS with slow-speed "Learn" playback. Echo suppression and speculative translation in the orchestrator.
+Provider-abstracted audio: VAD in-browser, speech-to-text, translation, text-to-speech with slow-speed playback for language acquisition. Echo suppression and speculative translation in the orchestrator.
 
-**Speaker ID**
+**Diarization** (local mode)
 
-ECAPA-TDNN embeddings (192-dim) stored in pgvector, cosine similarity matching. Custom inference server on Hetzner.
+ECAPA-TDNN embeddings in pgvector, cosine similarity matching. 
+
+In local mode — multiple speakers sharing one device — identifies who is speaking to resolve translation direction. 
+
+Overrides LLM language detection when the speaker's native language is known.
 
 **Stack**
 
-SvelteKit 2, Supabase (18 tables, RLS, Auth), LiveKit WebRTC rooms. `oyeme-mcp`: 24 tools across core, data, and infra.
+SvelteKit 2, Supabase, LiveKit WebRTC rooms. Operational MCP server: 24 tools across core, data, and infra.
 
 </details>
 
@@ -88,7 +116,8 @@ SvelteKit 2, Supabase (18 tables, RLS, Auth), LiveKit WebRTC rooms. `oyeme-mcp`:
 
 ### [`blog/`](https://github.com/factory2x/blog)
 
-Part of the refinement loop. Every post forces a review of what was built, and the output feeds back into the system.
+Part of the refinement loop. Built out of necessity — we needed somewhere to review and edit as a family.
+
 [loganmies.com](https://loganmies.com).
 
 <details>
@@ -96,21 +125,34 @@ Part of the refinement loop. Every post forces a review of what was built, and t
 <br>
 
 ```
-Notion Site Mirror DB → hq-mcp export → Python render → static HTML
-                                           ↳ Playwright → OG cards
+┌─────────────────────────────┐
+│          Notion DB          │
+│      (Site Mirror DB)       │
+└──────────────┬──────────────┘
+               ▼
+┌─────────────────────────────┐
+│           export            │
+│    (hq-mcp render input)    │
+└──────────────┬──────────────┘
+         ┌─────┴─────┐
+         ▼           ▼
+┌─────────────┐ ┌──────────────┐
+│   Python    │ │  Playwright  │
+│   render    │ │  (OG cards)  │
+└──────┬──────┘ └──────┬───────┘
+       │               │
+       ▼               ▼
+┌─────────────────────────────┐
+│         static HTML         │
+│     (Cloudflare Pages)      │
+└─────────────────────────────┘
 ```
 
 **Pipeline**
 
-Pages live in a Site Mirror DB. `hq-mcp` exports render-input JSON, a Python pipeline renders static HTML + Playwright-generated OG cards. No framework, no build step, EN/ES bilingual.
+Pages live in a Notion database. 
 
-**Content**
-
-Factory<sup>x</sup> engineering series (build, repeat, research, scale), Óyeme doctrine, airport connection plans, legal hub, pipeline showcase.
-
-**Showcase**
-
-`/src/` is an interactive Notion-style source table of every published page. Resizable columns, filterable by status/type/language.
+A Python pipeline exports, renders static HTML, and generates OG cards via Playwright.
 
 </details>
 
@@ -118,48 +160,10 @@ Factory<sup>x</sup> engineering series (build, repeat, research, scale), Óyeme 
 
 ### [`employment/`](https://github.com/factory2x/employment)
 
-Self-reflection and discovery.
-The same research pipeline that improves the product also surfaces what's next.
-
-<details>
-<summary>More details</summary>
-<br>
-
-**Find**
-
-Crawls 35 sources daily (Greenhouse ATS, Ashby ATS, EU aggregators, remote boards, HN Who is Hiring). Sonnet-scored against a 45-skill candidate profile with evidence chains and per-variant weights.
-
-**Resume**
-
-Notion is the source of truth. Five pages in the Site Mirror DB, three role-shape variants (AI Infra, SRE, Product), PDF render from live Notion blocks via weasyprint.
-
-**Tracking**
-
-Opportunities as GitHub Issues with contract-enforced status machines. EU-focused: Dublin, Amsterdam, London.
-
-</details>
+Self-reflection, discovery, opportunity tracking.
 
 ---
 
 ### [`.claude/`](https://github.com/factory2x/.claude)
 
-Org-level governance.
-Symlinked into `~/.claude/` on every machine via bootstrap script.
-
-<details>
-<summary>More details</summary>
-<br>
-
-**Skills**
-
-10+ reusable slash commands: spec writing and review, epic decomposition and execution, voice analysis (14-profile corpus), org-wide triage, blog drafting into Notion.
-
-**Hooks**
-
-Two PreToolUse enforcers: one blocks raw `gh issue` calls (forces writes through `hq-mcp`), one prevents field sessions from modifying org config.
-
-**Promotion**
-
-Field repos can shadow with local skills. Promotion path: local override → PR to `.claude` → headquarters merges.
-
-</details>
+Shared dotfiles for Claude Code — skills, hooks, and rules symlinked into `~/.claude/` on each machine. Being [folded into headquarters](https://github.com/factory2x/headquarters/issues/287).
