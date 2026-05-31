@@ -22,7 +22,8 @@ The tooling repos improve the product repos, and building the products exposes w
 
 ### [`headquarters/`](https://github.com/factory2x/headquarters)
 
-The nervous system. Everything flows through here — and back into my day job. Research pipeline, artifact contracts, MCP servers, governance layer.
+The nervous system. Everything flows through here — and back into my day job.
+Research pipeline, artifact contracts, MCP servers, governance layer.
 
 <details>
 <summary>Technical details</summary>
@@ -38,7 +39,8 @@ The nervous system. Everything flows through here — and back into my day job. 
 
 ### [`oyeme/`](https://github.com/factory2x/oyeme)
 
-[Something people actually use.](https://loganmies.com/blog/oyeme/dinner-table-driven-development/) Real-time interpreter for multilingual families. The only traditional product here so far — building it is what exposes what the tooling needs next.
+[Something people actually use.](https://loganmies.com/blog/oyeme/dinner-table-driven-development/) Real-time interpreter for multilingual families.
+The only traditional product here so far — building it is what exposes what the tooling needs next.
 
 <details>
 <summary>Technical details</summary>
@@ -53,7 +55,8 @@ The nervous system. Everything flows through here — and back into my day job. 
 
 ### [`blog/`](https://github.com/factory2x/blog)
 
-Part of the refinement loop. Every post forces a review of what was built, and the output feeds back into the system. [loganmies.com](https://loganmies.com).
+Part of the refinement loop. Every post forces a review of what was built, and the output feeds back into the system.
+[loganmies.com](https://loganmies.com).
 
 <details>
 <summary>Technical details</summary>
@@ -68,7 +71,8 @@ Part of the refinement loop. Every post forces a review of what was built, and t
 
 ### [`employment/`](https://github.com/factory2x/employment)
 
-Self-reflection and discovery. The same research pipeline that improves the product also surfaces what's next.
+Self-reflection and discovery.
+The same research pipeline that improves the product also surfaces what's next.
 
 <details>
 <summary>Technical details</summary>
@@ -83,7 +87,8 @@ Self-reflection and discovery. The same research pipeline that improves the prod
 
 ### [`.claude/`](https://github.com/factory2x/.claude)
 
-Org-level governance. Symlinked into `~/.claude/` on every machine via bootstrap script.
+Org-level governance.
+Symlinked into `~/.claude/` on every machine via bootstrap script.
 
 <details>
 <summary>Technical details</summary>
