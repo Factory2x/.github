@@ -1,0 +1,66 @@
+# web-ci — the node build gate, org-owned (workflow_call).
+#
+# Install, build, typecheck, optionally test. The caller stays thin and states
+# only what varies: node version, client-public build env, whether `npm run
+# check` applies, and a test command if the repo runs one in CI. Repos whose CI
+# carries bespoke machinery (fitness's automerge chain, ui's token suite) do
+# not force themselves into this shape — shared flows are for shared shapes.
+#
+# SELF-HOSTED, ALWAYS. Org Actions budgets are $0 with `prevent_further_usage`
+# on: a hosted job does not get slow CI, it gets NO CI (HQ#528). No runner
+# input on purpose.
+#
+# NO `cache: npm`, deliberately. That cache is a saving on GitHub-HOSTED
+# runners, where every job starts cold. These runners share one always-warm
+# Mac and one warm ~/.npm; restoring the Actions cache re-downloads gigabytes
+# over the cache API on top of what is already there — measured in fitness at
+# ~8.6 min per run, for nothing.
+name: web-ci
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        type: string
+        default: '24'
+      build-env:
+        # Client-public KEY=VALUE lines (one per line) the build needs —
+        # SvelteKit's $env/static/public wants them at BUILD time and CI has
+        # no .env. Public values only; secrets do not ride this input.
+        type: string
+        default: ''
+      run-check:
+        type: boolean
+        default: true
+      test-command:
+        # Empty = the repo runs no tests in this gate (and says why in the
+        # caller). Non-empty = run exactly this after the build.
+        type: string
+        default: ''
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Export client-public build env
+        if: inputs.build-env != ''
+        env:
+          BUILD_ENV: ${{ inputs.build-env }}
+        run: printf '%s\n' "$BUILD_ENV" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: typecheck
+        if: inputs.run-check
+        run: npm run check
+
+      - name: test
+        if: inputs.test-command != ''
+        run: ${{ inputs.test-command }}

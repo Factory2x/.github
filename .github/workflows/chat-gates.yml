@@ -1,0 +1,41 @@
+# chat-gates — the stamped context's merge gate, org-owned (workflow_call).
+#
+# Callers are thin: one job, `uses: factory2x/.github/.github/workflows/chat-gates.yml@main`.
+# The gate LOGIC is one-homed in each repo's scripts/ — these jobs call a script
+# and nothing more, so every gate is runnable by hand before a push and cannot
+# pass locally then fail in CI for reasons that are about the yaml. The two
+# script paths are the chat-standard stamp's conventional names; a context
+# without them has not stamped the gates and should not call this yet.
+#
+# SELF-HOSTED, ALWAYS. Org Actions budgets are $0 with `prevent_further_usage`
+# on: a hosted job does not get slow CI, it gets NO CI — a red check with no
+# log. All factory2x CI runs on the org's self-hosted runners (HQ#528). There
+# is no runner input on purpose: a caller cannot flip this back.
+name: chat-gates
+
+on:
+  workflow_call: {}
+
+jobs:
+  hat-parity:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      # chat-standard.md §Hat: the hat list has one authored home and three
+      # derived consumers — the persona CHECK, the chat_hats seed, and the
+      # files in hats/. A hat added to one and not the others fails the merge,
+      # not the review.
+      - name: manifest / files / persona CHECK / chat_hats seed agree
+        run: node scripts/check-hat-parity.mjs
+
+  hygiene:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      # Guest-schema discipline and credential discipline. See the script for
+      # what each check looks for and why it looks for the act rather than
+      # the word.
+      - name: guest-schema and credential hygiene
+        run: bash scripts/check-hygiene.sh
