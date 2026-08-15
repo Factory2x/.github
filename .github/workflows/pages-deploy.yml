@@ -33,6 +33,13 @@ on:
         # false = static site, deploy the tree as-is (no node, no install).
         type: boolean
         default: true
+      checkout-ref:
+        # Deploy THIS ref rather than the event's default. Callers whose deploy
+        # is invoked from an automerge chain (workflow_call emits no push, and
+        # the default checkout would be the PR head) pass 'main' so the merge
+        # result is what ships.
+        type: string
+        default: ''
       cloudflare-account-id:
         # An identifier, not a secret — it appears in dashboard URLs and
         # wrangler.toml. Callers that keep it in a secret instead pass the
@@ -55,6 +62,8 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.checkout-ref }}
 
       - name: Export client-public build env
         if: inputs.build-env != ''
