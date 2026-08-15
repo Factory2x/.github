@@ -26,5 +26,11 @@ Rules that bind every flow in this directory:
   cannot flip a job back to hosted (HQ#528).
 - This repo is PUBLIC. No secret, token, or private URL is ever written
   here; secrets arrive from callers via `secrets: inherit`.
+- **`inherit` misses ORG-level secrets at required-secret validation** —
+  the call fails with "Secret X is required, but not provided" before any
+  step runs. A caller whose secret lives at the org level maps it
+  explicitly (`secrets: {X: ${{ secrets.X }}}`), which evaluates in the
+  caller's context where org secrets resolve. Repo-level secrets work
+  with `inherit` as-is.
 - Gate logic stays one-homed in the calling repo's `scripts/` — a flow
   calls a script and nothing more, so gates run identically by hand.
