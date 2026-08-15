@@ -1,0 +1,40 @@
+# origin-check — the provenance gate, org-owned (workflow_call).
+#
+# Agent-created PRs are execution bookkeeping inside directed scope and carry a
+# machine-readable origin stamp in the body:
+#
+#   <!-- hq:origin=<owner|handoff|program> hq:directive=<repo>#<n> -->
+#
+# citing the directive chain back to a human utterance. A PR that cannot cite a
+# human origin fails this check — the CI half of the rule whose doctrine lives
+# in org-config/rules/agent-conduct.md §10 (HQ#568); the tool-layer half is the
+# enforce-origin-governance PreToolUse hook. In this org agents author
+# effectively every PR, so the stamp is required unconditionally; a human
+# opening a PR by hand satisfies it by writing the stamp for their own
+# utterance, which is one line.
+#
+# The job runs only on pull_request events — callers that also trigger on push
+# get a skip, not a failure, because a push has no body to check.
+#
+# SELF-HOSTED, ALWAYS (HQ#528). No runner input on purpose.
+name: origin-check
+
+on:
+  workflow_call: {}
+
+jobs:
+  origin:
+    if: github.event_name == 'pull_request'
+    runs-on: self-hosted
+    steps:
+      - name: PR body carries a human-origin stamp
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          set -uo pipefail
+          if printf '%s' "$BODY" | grep -qE '<!--[[:space:]]*hq:origin=(owner|handoff|program)[[:space:]]+hq:directive=[A-Za-z0-9_.-]+#[0-9]+[[:space:]]*-->'; then
+            echo "origin stamp present"
+          else
+            echo "::error::No origin stamp. Agent-created PRs carry <!-- hq:origin=<owner|handoff|program> hq:directive=<repo>#<n> --> citing the directing human utterance (org-config/rules/agent-conduct.md §10, HQ#568). An item without human origin is invalid by construction."
+            exit 1
+          fi

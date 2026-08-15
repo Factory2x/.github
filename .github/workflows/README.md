@@ -12,6 +12,7 @@ instead of per-repo.
 | `web-ci.yml` | npm ci → build → check → optional tests | node version, client-public build env, test command |
 | `pages-deploy.yml` | optional build → wrangler pages deploy | build env, the exact deploy line, account id (or secret) |
 | `uv-tests.yml` | uv sync → pytest → optional extra suite | sync scope, extra suite |
+| `origin-check.yml` | PR body carries the `hq:origin` provenance stamp (agent-conduct §10) | nothing — skips on non-PR events |
 
 Referenced `@main`, deliberately: these are governance, not artifacts —
 they move with the org, and a fix here propagates without bump PRs.
