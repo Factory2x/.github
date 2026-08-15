@@ -1,0 +1,37 @@
+# uv-tests — the python test gate, org-owned (workflow_call).
+#
+# `uv sync` then `uv run pytest -q`, with an optional extra command for suites
+# that live outside pytest (headquarters runs its hook-enforcement bash suite
+# after). The caller states only its sync scope.
+#
+# SELF-HOSTED, ALWAYS. Org Actions budgets are $0 with `prevent_further_usage`
+# on: a hosted job does not get slow CI, it gets NO CI (HQ#528). No runner
+# input on purpose.
+name: uv-tests
+
+on:
+  workflow_call:
+    inputs:
+      sync-args:
+        type: string
+        default: '--all-groups --all-extras'
+      post-test-command:
+        # Runs after pytest when non-empty (e.g. a bash test suite).
+        type: string
+        default: ''
+
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: uv sync ${{ inputs.sync-args }}
+
+      - name: pytest
+        run: uv run pytest -q
+
+      - name: post-test suite
+        if: inputs.post-test-command != ''
+        run: ${{ inputs.post-test-command }}
